@@ -1,6 +1,7 @@
 package com.example.authspring.controllers;
 
 
+import com.example.authspring.dto.EmployeeRequest;
 import com.example.authspring.entities.Employee;
 import com.example.authspring.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,14 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/SignUp")
-    public ResponseEntity<?> SignUp(@RequestBody Employee newEmployee){
+    public ResponseEntity<String> SignUp(@RequestBody Employee newEmployee){
         String employee = authService.createEmployee(newEmployee);
+        return new ResponseEntity<String>(employee, HttpStatus.OK);
+    }
+
+    @PostMapping("/SignIn")
+    public ResponseEntity<String> SignIn(@RequestBody EmployeeRequest newEmployee){
+        String employee = authService.SignInUser(newEmployee);
         return new ResponseEntity<String>(employee, HttpStatus.OK);
     }
 
